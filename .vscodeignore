@@ -1,7 +1,8 @@
 .vscode/**
 node_modules/**
-.gitignore
 .git/**
+.gitignore
+images/**
 *.map
 *.log
 tsconfig.json
