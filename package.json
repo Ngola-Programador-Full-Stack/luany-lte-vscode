@@ -3,7 +3,7 @@
   "displayName": "Luany Template Engine - LTE",
   "description": "Official VS Code extension providing syntax highlighting and PHP embedding for Luany Template Engine (.lte)",
   "version": "0.1.0",
-  "publisher": "luany-template-engine",
+  "publisher": "luany",
   "license": "MIT",
   "repository": {
     "type": "git",
