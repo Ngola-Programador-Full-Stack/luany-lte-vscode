@@ -1,0 +1,9 @@
+.vscode/**
+node_modules/**
+.gitignore
+.git/**
+*.map
+*.log
+tsconfig.json
+yarn.lock
+package-lock.json

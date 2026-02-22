@@ -1,0 +1,46 @@
+{
+  "Layout": {
+    "prefix": "layout",
+    "body": [
+      "@extends('layouts.main')",
+      "",
+      "@section('title', '${1:Page Title}')",
+      "",
+      "@section('content')",
+      "    $0",
+      "@endsection"
+    ]
+  },
+
+  "If": {
+    "prefix": "if",
+    "body": [
+      "@if(${1:condition})",
+      "    $0",
+      "@endif"
+    ]
+  },
+
+  "Foreach": {
+    "prefix": "foreach",
+    "body": [
+      "@foreach(${1:$items} as ${2:$item})",
+      "    $0",
+      "@endforeach"
+    ]
+  },
+
+  "Section": {
+    "prefix": "section",
+    "body": [
+      "@section('${1:name}')",
+      "    $0",
+      "@endsection"
+    ]
+  },
+
+  "CSRF": {
+    "prefix": "csrf",
+    "body": ["@csrf"]
+  }
+}

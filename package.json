@@ -1,0 +1,60 @@
+{
+  "name": "luany-lte",
+  "displayName": "Luany Template Engine - LTE",
+  "description": "Official VS Code extension providing syntax highlighting and PHP embedding for Luany Template Engine (.lte)",
+  "version": "0.1.0",
+  "publisher": "luany-template-engine",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ngola-Programador-Full-Stack/luany-lte-vscode"
+  },
+  "bugs": {
+    "url": "https://github.com/Ngola-Programador-Full-Stack/luany-lte-vscode/issues"
+  },
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "keywords": [
+    "luany",
+    "lte",
+    "template engine",
+    "php",
+    "blade",
+    "templating",
+    "html",
+    "syntax highlighting"
+  ],
+  "icon": "icons/luany-icon.png",
+  "contributes": {
+    "languages": [
+      {
+        "id": "lte",
+        "aliases": ["Luany LTE", "LTE"],
+        "extensions": [".lte"],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "lte",
+        "scopeName": "text.lte",
+        "path": "./syntaxes/lte.tmLanguage.json",
+        "embeddedLanguages": {
+          "meta.embedded.block.php.lte": "php",
+          "meta.embedded.echo.lte": "php",
+          "meta.embedded.raw.lte": "php"
+        }
+      }
+    ],
+    "snippets": [
+      {
+        "language": "lte",
+        "path": "./snippets/lte.json"
+      }
+    ]
+  }
+}

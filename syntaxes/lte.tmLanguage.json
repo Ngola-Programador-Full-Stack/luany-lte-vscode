@@ -1,0 +1,53 @@
+{
+  "scopeName": "text.lte",
+  "name": "Luany LTE",
+  "patterns": [
+    { "include": "#comments" },
+    { "include": "#rawEcho" },
+    { "include": "#echo" },
+    { "include": "#phpBlock" },
+    { "include": "#directives" },
+    { "include": "text.html.basic" }
+  ],
+  "repository": {
+
+    "comments": {
+      "name": "comment.block.lte",
+      "begin": "\\{\\{--",
+      "end": "--\\}\\}"
+    },
+
+    "echo": {
+      "name": "meta.embedded.echo.lte",
+      "begin": "\\{\\{",
+      "end": "\\}\\}",
+      "patterns": [
+        { "include": "source.php" }
+      ]
+    },
+
+    "rawEcho": {
+      "name": "meta.embedded.raw.lte",
+      "begin": "\\{!!",
+      "end": "!!\\}",
+      "patterns": [
+        { "include": "source.php" }
+      ]
+    },
+
+    "phpBlock": {
+      "name": "meta.embedded.block.php.lte",
+      "begin": "@php",
+      "end": "@endphp",
+      "patterns": [
+        { "include": "source.php" }
+      ]
+    },
+
+    "directives": {
+      "name": "keyword.control.lte",
+      "match": "@(if|elseif|else|endif|unless|endunless|foreach|endforeach|for|endfor|while|endwhile|section|endsection|yield|extends|include|auth|endauth|guest|endguest|csrf|method)"
+    }
+
+  }
+}
