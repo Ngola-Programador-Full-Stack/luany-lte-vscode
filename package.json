@@ -2,15 +2,15 @@
   "name": "luany-lte",
   "displayName": "Luany Template Engine - LTE",
   "description": "Official VS Code extension providing syntax highlighting and PHP embedding for Luany Template Engine (.lte)",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "luany",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Ngola-Programador-Full-Stack/luany-lte-vscode"
+    "url": "https://github.com/luany-ecosystem/luany-lte-vscode"
   },
   "bugs": {
-    "url": "https://github.com/Ngola-Programador-Full-Stack/luany-lte-vscode/issues"
+    "url": "https://github.com/luany-ecosystem/luany-lte-vscode/issues"
   },
   "engines": {
     "vscode": "^1.80.0"
@@ -26,15 +26,23 @@
     "blade",
     "templating",
     "html",
-    "syntax highlighting"
+    "syntax highlighting",
+    "ast",
+    "compiler",
+    "blade-like"
   ],
   "icon": "icons/luany-icon.png",
   "contributes": {
     "languages": [
       {
         "id": "lte",
-        "aliases": ["Luany LTE", "LTE"],
-        "extensions": [".lte"],
+        "aliases": [
+          "Luany LTE",
+          "LTE"
+        ],
+        "extensions": [
+          ".lte"
+        ],
         "configuration": "./language-configuration.json"
       }
     ],
@@ -45,6 +53,8 @@
         "path": "./syntaxes/lte.tmLanguage.json",
         "embeddedLanguages": {
           "meta.embedded.block.php.lte": "php",
+          "meta.embedded.block.css.lte": "css",
+          "meta.embedded.block.js.lte": "javascript",
           "meta.embedded.echo.lte": "php",
           "meta.embedded.raw.lte": "php"
         }
@@ -55,6 +65,22 @@
         "language": "lte",
         "path": "./snippets/lte.json"
       }
-    ]
+    ],
+    "configurationDefaults": {
+      "[lte]": {
+        "editor.autoIndent": "full",
+        "editor.formatOnType": true,
+        "editor.suggest.insertMode": "replace",
+        "editor.wordWrap": "on",
+        "editor.quickSuggestions": {
+          "other": true,
+          "comments": false,
+          "strings": true
+        }
+      },
+      "emmet.includeLanguages": {
+        "lte": "html"
+      }
+    }
   }
 }

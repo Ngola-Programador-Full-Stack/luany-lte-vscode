@@ -2,23 +2,55 @@
   "comments": {
     "blockComment": ["{{--", "--}}"]
   },
+
   "brackets": [
-    ["{", "}"],
-    ["[", "]"],
-    ["(", ")"]
+    ["{{--", "--}}"],
+    ["{{",  "}}"  ],
+    ["{!!", "!!}" ],
+    ["{",   "}"   ],
+    ["[",   "]"   ],
+    ["(",   ")"   ]
   ],
+
   "autoClosingPairs": [
-    { "open": "{", "close": "}" },
-    { "open": "(", "close": ")" },
-    { "open": "[", "close": "]" },
-    { "open": "\"", "close": "\"" },
-    { "open": "'", "close": "'" }
+    { "open": "{{--", "close": " --}}" },
+    { "open": "{{",   "close": "}}"    },
+    { "open": "{!!",  "close": "!!}"   },
+    { "open": "{",    "close": "}",    "notIn": ["string", "comment"] },
+    { "open": "(",    "close": ")",    "notIn": ["string", "comment"] },
+    { "open": "[",    "close": "]",    "notIn": ["string", "comment"] },
+    { "open": "\"",   "close": "\"",   "notIn": ["string"] },
+    { "open": "'",    "close": "'",    "notIn": ["string"] }
   ],
+
+  "autoCloseBefore": " \t\n;:.,=}])>\"'",
+
   "surroundingPairs": [
-    { "open": "{", "close": "}" },
-    { "open": "(", "close": ")" },
-    { "open": "[", "close": "]" },
-    { "open": "\"", "close": "\"" },
-    { "open": "'", "close": "'" }
-  ]
+    ["{{--", "--}}"],
+    ["{{",   "}}"  ],
+    ["{!!",  "!!}" ],
+    ["{",    "}"   ],
+    ["(",    ")"   ],
+    ["[",    "]"   ],
+    ["\"",   "\""  ],
+    ["'",    "'"   ]
+  ],
+
+  "indentationRules": {
+    "increaseIndentPattern": "^(?!.*@end)(?!.*@else)(?!.*@empty)^\\s*@(if|unless|foreach|forelse|for|while|section|style|script|push|auth|guest|php)(\\(.*\\))?\\s*$",
+    "decreaseIndentPattern": "^\\s*@(endif|endunless|endforeach|endforelse|endfor|endwhile|endsection|stop|endstyle|endscript|endpush|endauth|endguest|endphp|else|elseif|empty)\\b"
+  },
+
+  "onEnterRules": [
+    {
+      "beforeText": "^\\s*@(if|unless|foreach|forelse|for|while|section|style|script|push|auth|guest)(\\(.*\\))?\\s*$",
+      "action": { "indentAction": "indent" }
+    },
+    {
+      "beforeText": "^\\s*@(else|elseif|empty)(\\(.*\\))?\\s*$",
+      "action": { "indentAction": "indentOutdent" }
+    }
+  ],
+
+  "wordPattern": "(-?\\d*\\.\\d\\w*)|([^\\`\\~\\!\\@\\#\\%\\^\\&\\*\\(\\)\\-\\=\\+\\[\\{\\]\\}\\\\\\|\\;\\:\\'\\\"\\,\\.\\<\\>\\/\\?\\s]+)"
 }

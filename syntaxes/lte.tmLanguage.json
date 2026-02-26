@@ -1,52 +1,146 @@
 {
   "scopeName": "text.lte",
   "name": "Luany LTE",
+  "fileTypes": ["lte"],
+
   "patterns": [
-    { "include": "#comments" },
-    { "include": "#rawEcho" },
-    { "include": "#echo" },
-    { "include": "#phpBlock" },
-    { "include": "#directives" },
-    { "include": "text.html.basic" }
+    { "include": "#comments"            },
+    { "include": "#rawEcho"             },
+    { "include": "#echo"                },
+    { "include": "#phpBlock"            },
+    { "include": "#styleBlock"          },
+    { "include": "#scriptBlock"         },
+    { "include": "#directiveWithArgs"   },
+    { "include": "#directiveStandalone" },
+    { "include": "text.html.basic"      }
   ],
+
   "repository": {
 
     "comments": {
       "name": "comment.block.lte",
       "begin": "\\{\\{--",
-      "end": "--\\}\\}"
+      "end":   "--\\}\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.comment.begin.lte" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.comment.end.lte"   } }
     },
 
     "echo": {
       "name": "meta.embedded.echo.lte",
       "begin": "\\{\\{",
-      "end": "\\}\\}",
-      "patterns": [
-        { "include": "source.php" }
-      ]
+      "end":   "\\}\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.template.begin.lte" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.template.end.lte"   } },
+      "patterns": [ { "include": "source.php" } ]
     },
 
     "rawEcho": {
       "name": "meta.embedded.raw.lte",
       "begin": "\\{!!",
-      "end": "!!\\}",
-      "patterns": [
-        { "include": "source.php" }
-      ]
+      "end":   "!!\\}",
+      "beginCaptures": { "0": { "name": "punctuation.definition.template.begin.lte" } },
+      "endCaptures":   { "0": { "name": "punctuation.definition.template.end.lte"   } },
+      "patterns": [ { "include": "source.php" } ]
     },
 
     "phpBlock": {
       "name": "meta.embedded.block.php.lte",
-      "begin": "@php",
-      "end": "@endphp",
+      "begin": "(?i)@php\\b",
+      "end":   "(?i)@endphp\\b",
+      "beginCaptures": { "0": { "name": "keyword.control.php.lte" } },
+      "endCaptures":   { "0": { "name": "keyword.control.php.lte" } },
+      "patterns": [ { "include": "source.php" } ]
+    },
+
+    "styleBlock": {
+      "name": "meta.embedded.block.css.lte",
+      "begin": "@style\\b",
+      "end":   "@endstyle\\b",
+      "beginCaptures": { "0": { "name": "keyword.control.asset.lte" } },
+      "endCaptures":   { "0": { "name": "keyword.control.asset.lte" } },
+      "patterns": [ { "include": "source.css" } ]
+    },
+
+    "scriptBlock": {
+      "name": "meta.embedded.block.js.lte",
+      "begin": "@script(?!s)(?:\\s*\\((?:defer|async|[^)]*)\\))?",
+      "end":   "@endscript\\b",
+      "beginCaptures": {
+        "0": {
+          "patterns": [
+            { "match": "@script",       "name": "keyword.control.asset.lte"    },
+            { "match": "\\([^)]*\\)",   "name": "meta.directive.args.lte"      }
+          ]
+        }
+      },
+      "endCaptures": { "0": { "name": "keyword.control.asset.lte" } },
+      "patterns": [ { "include": "source.js" } ]
+    },
+
+    "directiveWithArgs": {
+      "comment": "Directives with PHP args. Lookbehind (?<![\\w.]) prevents matching email addresses.",
       "patterns": [
-        { "include": "source.php" }
+
+        {
+          "comment": "Conditionals: @if @elseif @unless",
+          "match": "(?<![\\w.])(@(?:if|elseif|unless))\\s*(\\((?:[^)(]|\\((?:[^)(]|\\([^)(]*\\))*\\))*\\))",
+          "captures": {
+            "1": { "name": "keyword.control.conditional.lte" },
+            "2": { "patterns": [ { "include": "source.php" } ] }
+          }
+        },
+
+        {
+          "comment": "Loops: @foreach @forelse @for @while",
+          "match": "(?<![\\w.])(@(?:foreach|forelse|for|while))\\s*(\\((?:[^)(]|\\((?:[^)(]|\\([^)(]*\\))*\\))*\\))",
+          "captures": {
+            "1": { "name": "keyword.control.loop.lte" },
+            "2": { "patterns": [ { "include": "source.php" } ] }
+          }
+        },
+
+        {
+          "comment": "Layout: @section @yield @extends @include",
+          "match": "(?<![\\w.])(@(?:section|yield|extends|include))\\s*(\\((?:[^)(]|\\((?:[^)(]|\\([^)(]*\\))*\\))*\\))",
+          "captures": {
+            "1": { "name": "keyword.control.layout.lte" },
+            "2": { "patterns": [ { "include": "source.php" } ] }
+          }
+        },
+
+        {
+          "comment": "Stacks: @push @stack",
+          "match": "(?<![\\w.])(@(?:push|stack))\\s*(\\((?:[^)(]|\\((?:[^)(]|\\([^)(]*\\))*\\))*\\))",
+          "captures": {
+            "1": { "name": "keyword.control.stack.lte" },
+            "2": { "patterns": [ { "include": "source.php" } ] }
+          }
+        },
+
+        {
+          "comment": "@method — arg is always a string literal",
+          "match": "(?<![\\w.])(@method)\\s*(\\([^)]*\\))",
+          "captures": {
+            "1": { "name": "keyword.control.security.lte" },
+            "2": { "name": "string.other.method-value.lte" }
+          }
+        }
+
       ]
     },
 
-    "directives": {
-      "name": "keyword.control.lte",
-      "match": "@(if|elseif|else|endif|unless|endunless|foreach|endforeach|for|endfor|while|endwhile|section|endsection|yield|extends|include|auth|endauth|guest|endguest|csrf|method)"
+    "directiveStandalone": {
+      "comment": "Directives without arguments, matched after directiveWithArgs.",
+      "patterns": [
+        { "name": "keyword.control.conditional.lte", "match": "(?<![\\w.])@(endif|endunless|else|elseif)\\b"               },
+        { "name": "keyword.control.loop.lte",        "match": "(?<![\\w.])@(endforeach|endforelse|endfor|endwhile|empty)\\b" },
+        { "name": "keyword.control.layout.lte",      "match": "(?<![\\w.])@(endsection|stop)\\b"                            },
+        { "name": "keyword.control.asset.lte",       "match": "(?<![\\w.])@(styles|scripts|endstyle|endscript)\\b"          },
+        { "name": "keyword.control.stack.lte",       "match": "(?<![\\w.])@(endpush)\\b"                                    },
+        { "name": "keyword.control.auth.lte",        "match": "(?<![\\w.])@(auth|endauth|guest|endguest)\\b"                 },
+        { "name": "keyword.control.security.lte",    "match": "(?<![\\w.])@csrf\\b"                                         },
+        { "name": "keyword.control.custom.lte",      "match": "(?<![\\w.])@[a-zA-Z_][a-zA-Z0-9_]*\\b"                      }
+      ]
     }
 
   }

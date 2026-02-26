@@ -1,15 +1,50 @@
 {
-  "Layout": {
+  "Layout (v0.2)": {
     "prefix": "layout",
     "body": [
-      "@extends('layouts.main')",
+      "@extends('layouts.${1:main}')",
       "",
-      "@section('title', '${1:Page Title}')",
+      "@section('title', '${2:Page Title}')",
+      "",
+      "@push('head')",
+      "    <meta name=\"description\" content=\"${3:}\">",
+      "@endpush",
+      "",
+      "@style",
+      "    /* ${4:page CSS} */",
+      "@endstyle",
       "",
       "@section('content')",
       "    $0",
-      "@endsection"
-    ]
+      "@endsection",
+      "",
+      "@script(defer)",
+      "    // ${5:page JS}",
+      "@endscript"
+    ],
+    "description": "Official LTE v0.2 view structure"
+  },
+
+  "Component": {
+    "prefix": "component",
+    "body": [
+      "@style",
+      "    .${1:component-name} {",
+      "        $2",
+      "    }",
+      "@endstyle",
+      "",
+      "<div class=\"${1:component-name}\">",
+      "    $0",
+      "</div>",
+      "",
+      "@script(defer)",
+      "    document.querySelectorAll('.${1:component-name}').forEach(function(el) {",
+      "        $3",
+      "    });",
+      "@endscript"
+    ],
+    "description": "Self-contained LTE component with collocated CSS and JS"
   },
 
   "If": {
@@ -18,16 +53,42 @@
       "@if(${1:condition})",
       "    $0",
       "@endif"
-    ]
+    ],
+    "description": "@if / @endif block"
+  },
+
+  "If Else": {
+    "prefix": "ifelse",
+    "body": [
+      "@if(${1:condition})",
+      "    $2",
+      "@else",
+      "    $0",
+      "@endif"
+    ],
+    "description": "@if / @else / @endif block"
   },
 
   "Foreach": {
     "prefix": "foreach",
     "body": [
-      "@foreach(${1:$items} as ${2:$item})",
+      "@foreach(${1:\\$items} as ${2:\\$item})",
       "    $0",
       "@endforeach"
-    ]
+    ],
+    "description": "@foreach / @endforeach loop"
+  },
+
+  "Forelse": {
+    "prefix": "forelse",
+    "body": [
+      "@forelse(${1:\\$items} as ${2:\\$item})",
+      "    $3",
+      "@empty",
+      "    <p>${0:No items found.}</p>",
+      "@endforelse"
+    ],
+    "description": "@forelse / @empty / @endforelse loop with empty state"
   },
 
   "Section": {
@@ -36,11 +97,79 @@
       "@section('${1:name}')",
       "    $0",
       "@endsection"
-    ]
+    ],
+    "description": "@section / @endsection block"
+  },
+
+  "Style Block": {
+    "prefix": "style",
+    "body": [
+      "@style",
+      "    ${0}",
+      "@endstyle"
+    ],
+    "description": "Inline CSS block — accumulated by AssetStack"
+  },
+
+  "Script Block": {
+    "prefix": "script",
+    "body": [
+      "@script(defer)",
+      "    ${0}",
+      "@endscript"
+    ],
+    "description": "Inline JS block with defer — accumulated by AssetStack"
+  },
+
+  "Push": {
+    "prefix": "push",
+    "body": [
+      "@push('${1:head}')",
+      "    $0",
+      "@endpush"
+    ],
+    "description": "@push / @endpush — push content into named stack"
+  },
+
+  "Include": {
+    "prefix": "include",
+    "body": [
+      "@include('${1:components.name}')"
+    ],
+    "description": "@include partial view"
+  },
+
+  "Include with data": {
+    "prefix": "include-data",
+    "body": [
+      "@include('${1:components.name}', ['${2:key}' => ${3:\\$value}])"
+    ],
+    "description": "@include partial view with data"
   },
 
   "CSRF": {
     "prefix": "csrf",
-    "body": ["@csrf"]
+    "body": ["@csrf"],
+    "description": "CSRF hidden input field"
+  },
+
+  "Auth": {
+    "prefix": "auth",
+    "body": [
+      "@auth",
+      "    $0",
+      "@endauth"
+    ],
+    "description": "@auth / @endauth guard block"
+  },
+
+  "Guest": {
+    "prefix": "guest",
+    "body": [
+      "@guest",
+      "    $0",
+      "@endguest"
+    ],
+    "description": "@guest / @endguest guard block"
   }
 }
