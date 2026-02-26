@@ -1,7 +1,7 @@
 {
   "name": "luany-lte",
   "displayName": "Luany Template Engine - LTE",
-  "description": "Official VS Code extension providing syntax highlighting and PHP embedding for Luany Template Engine (.lte)",
+  "description": "PHP template engine syntax highlighting, snippets and Emmet support for .lte files — blade-like templating with AST-driven parsing",
   "version": "0.2.0",
   "publisher": "luany",
   "license": "MIT",
@@ -16,7 +16,8 @@
     "vscode": "^1.80.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Snippets"
   ],
   "keywords": [
     "luany",
@@ -29,7 +30,13 @@
     "syntax highlighting",
     "ast",
     "compiler",
-    "blade-like"
+    "blade-like",
+    "php template",
+    "blade syntax",
+    "php views",
+    "template syntax highlighting",
+    "mvc",
+    "php snippets"
   ],
   "icon": "icons/luany-icon.png",
   "contributes": {
